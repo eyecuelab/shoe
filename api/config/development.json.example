@@ -1,0 +1,27 @@
+{
+  "db": {
+    "name": "shoe_dev",
+    "user": "postgres",
+    "password": "",
+    "host": "localhost"
+  },
+  "token": {
+    "secret": "12345"
+  },
+  "sendgrid": {
+    "apiKey": "SG.CHANGETHIS"
+  },
+  "emails": {
+    "defaults": "example@example.com",
+    "system": {
+      "fromName": "shoe-dev-from",
+      "fromAddress": "example@example.com",
+      "toName": "shoe-dev-to",
+      "toAddress": "example@example.com"
+    }
+  },
+  "AWS": {
+    "accessKeyId": "ABC-CHANGETHIS",
+    "secretAccessKey": "123-CHANGETHIS"
+  }
+}
