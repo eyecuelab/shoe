@@ -4,7 +4,7 @@
 ```
 cd api
 npm ci
-cp /configs/development.json.example /configs/developmemnt.json
+cp api/config/development.json.example api/config/developmemnt.json
 npm start
 ```
 
