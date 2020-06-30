@@ -13,13 +13,11 @@ export class SessionSerializer extends BaseSerializer {
     return {
       topLevelLinks: {
         self: this.url('session'),
+        orders: this.url('orders'),
       },
       dataLinks: null,
       attributes: this.attrs(),
-      user: {
-        ref: 'id',
-        attributes: ['uuid', 'first_name', 'last_name', 'profile_image_url', 'email', 'is_active'],
-      },
+      user: this.userRel(),
       meta: {
         actions: () => {
           const actions = [
@@ -29,6 +27,11 @@ export class SessionSerializer extends BaseSerializer {
               ['first_name', 'text', req.currentUser.attributes.first_name],
               ['last_name', 'text', req.currentUser.attributes.last_name],
               ['email', 'text', req.currentUser.attributes.email],
+              ['street_address', 'text', req.currentUser.attributes.street_address],
+              ['city', 'text', req.currentUser.attributes.city],
+              ['state', 'text', req.currentUser.attributes.state],
+              ['postal_code', 'text', req.currentUser.attributes.postal_code],
+              ['phone', 'text', req.currentUser.attributes.phone],
               ['image_file', 'file'],
               ['password', 'password'],
             ]),

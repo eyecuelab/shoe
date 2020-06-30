@@ -7,6 +7,7 @@ import uuidv4 from 'uuid/v4';
 import Core from '../../core';
 import { BaseModel } from './base';
 import { Session } from './session';
+import { Cleaner } from './cleaner';
 // import JSONAPIUtil from '../utils/jsonapi';
 
 const { DBUtil } = Core.utils;
@@ -31,6 +32,10 @@ export class User extends BaseModel {
     return this.hasMany(Session);
   }
 
+  cleaner() {
+    return this.hasOne(Cleaner);
+  }
+
   static withRolesScope(roles) {
     return (qb) => {
       qb.whereRaw('users.scope @> ?', [roles]);
@@ -51,6 +56,11 @@ export class User extends BaseModel {
       last_name: Joi.string(),
       uuid: Joi.string().min(36).max(36).required(),
       scope: Joi.array().items(Joi.string()),
+      street_address: Joi.string().allow(''),
+      city: Joi.string().allow(''),
+      state: Joi.string().length(2).allow(''),
+      postal_code: Joi.string().allow(''),
+      phone: Joi.string().allow(''),
     });
     return Joi.validate(user, schema);
   }
@@ -59,6 +69,12 @@ export class User extends BaseModel {
     const defaults = {
       uuid: uuidv4(),
       password: uuidv4(),
+      scope: [],
+      street_address: '',
+      city: '',
+      state: '',
+      postal_code: '',
+      phone: '',
     };
     const data = { ...defaults, ...props };
     const { error } = this.validate(data);

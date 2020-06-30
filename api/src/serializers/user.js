@@ -12,7 +12,8 @@ export class UserSerializer extends BaseSerializer {
   static attrs() {
     return [
       'first_name', 'last_name', 'email', 'scope', 'image_url',
-      'created_at', 'updated_at',
+      'created_at', 'updated_at', 'phone', 'street_address', 'city', 'state',
+      'postal_code',
     ];
   }
 
@@ -38,10 +39,13 @@ export class UserSerializer extends BaseSerializer {
       ['first_name', 'text', record.first_name],
       ['last_name', 'text', record.last_name],
       ['email', 'text', record.email],
+      ['street_address', 'text', record.street_address],
+      ['city', 'text', record.city],
+      ['state', 'text', record.state],
+      ['postal_code', 'text', record.postal_code],
+      ['phone', 'text', record.phone],
       ['image_file', 'file'],
-      ['password', 'password'],
     ]));
-    // actions.push(this.action('DELETE', 'delete', `${path}/${record.id}`));
 
     return actions;
   }

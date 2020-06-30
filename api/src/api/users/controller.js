@@ -37,19 +37,19 @@ class UsersController extends BaseController {
     return UserSerializer.jsonAPI(item, req);
   }
 
-  // async create(req) {
-  //   const input = this.input(req);
-  //   const { password } = req.payload;
-  //   input.password = User.encrypt(password);
-  //   const [err, item] = await To(User.forge(input).save());
-  //   if (err) {
-  //     return Boom.badRequest(err);
-  //   }
-  //
-  //   await this.accountEmailer.sendSignupEmail(item);
-  //
-  //   return UserSerializer.jsonAPI(item, req);
-  // }
+  async create(req) {
+    const input = this.input(req);
+    const { password } = req.payload;
+    input.password = User.encrypt(password);
+    const [err, item] = await To(User.forge(input).save());
+    if (err) {
+      return Boom.badRequest(err);
+    }
+
+    await this.accountEmailer.sendSignupEmail(item);
+
+    return UserSerializer.jsonAPI(item, req);
+  }
 
   async update(req) {
     let item = req.currentUser;

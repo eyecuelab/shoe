@@ -17,9 +17,9 @@ describe('Session API', () => {
   let users = [];
   let user;
   let s;
-  const signedInActions = ['logout'];
+  const signedInActions = ['logout', 'update'];
   const signedInLinks = [
-    'users', 'pages',
+    'self', 'orders',
   ];
 
   before(async () => {
@@ -31,17 +31,24 @@ describe('Session API', () => {
   });
 
   it('login', async () => {
-    const payload = { email: user.email, password: 'shoe' };
+    // no password rejects
+    const payload = { email: user.email };
     let response = await api.postAnon(s, '/login', payload);
     response = await api.postAnon(s, '/login', payload);
-    expect(response.statusCode).to.equal(200);
+
+    expect(response.statusCode).to.equal(400);
+    expect(response.result.message).to.equal('child "password" fails because ["password" is required]');
+
+    // case sensitive password
+    response = await api.postAnon(s, '/login', { ...payload, password: 'THESHOE' });
+    expect(response.statusCode).to.equal(401);
+    expect(response.result.message).to.equal('Wrong email/password');
+
+    // successful login
+    response = await api.postAnon(s, '/login', { ...payload, password: 'theshoe' });
     await schema.validateOne(response.result);
     schema.mustHaveActions(response.result, signedInActions);
     schema.mustHaveLinks(response.result, signedInLinks);
-
-    // case sensitive password
-    response = await api.postAnon(s, '/login', { ...payload, password: 'shoe' });
-    expect(response.statusCode).to.equal(401);
   });
 
   it('get current auth session jsonapi', async () => {
@@ -59,6 +66,18 @@ describe('Session API', () => {
     expect(response.statusCode).to.equal(200);
     await schema.validateOne(response.result);
     schema.mustHaveActions(response.result,
-      ['login']);
+      ['login', 'signup']);
+  });
+
+  it('signs up a user', async () => {
+    const payload = {
+      first_name: 'Edward',
+      last_name: 'Scissor Hands',
+      email: 'test@example.com',
+      password: 'testPassword',
+    };
+    const response = await api.postAnon(s, '/signup', payload);
+
+    expect(response.statusCode).to.equal(204);
   });
 });

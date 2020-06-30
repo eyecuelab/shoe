@@ -18,6 +18,9 @@
     "first_name": "Chuck",
     "last_name": "Norris",
     "email": "example3@example.com",
-    "password": "theshoe"
+    "password": "theshoe",
+    "scope": [
+      "admin"
+    ]
   }
 ]

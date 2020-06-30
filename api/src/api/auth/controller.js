@@ -11,7 +11,8 @@ import { Session } from '../../models/session';
 import { SessionSerializer } from '../../serializers/session';
 import { SessionAnonSerializer } from '../../serializers/session_anon';
 
-const { TokenUtil, SessionUtil } = Core.utils;
+const { TokenUtil, SessionUtil, GeneralUtil } = Core.utils;
+const { To } = GeneralUtil;
 
 const CONTROLLER = 'AuthController';
 
@@ -76,6 +77,27 @@ class AuthController extends BaseController {
     sess.id = 'anonymous';
 
     return SessionAnonSerializer.jsonAPI(sess, req);
+  }
+
+
+  async signup(req, h) {
+    // TODO: send confirmation email, then take password with email token
+    const [err] = await To(User.createOne(this.input(req)));
+
+    if (err) {
+      throw Boom.badRequest(err);
+    }
+    return h.response().code(204);
+  }
+
+  input(req) {
+    const keys = [
+      'first_name',
+      'last_name',
+      'email',
+      'password',
+    ];
+    return this.cleanInput(req, keys);
   }
 }
 

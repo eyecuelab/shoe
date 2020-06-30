@@ -14,7 +14,9 @@ export class BaseSerializer extends Base {
     return {
       ref: 'id',
       attributes: [
-        'uuid', 'email', 'first_name', 'last_name', 'profile_image_url', 'is_active',
+        'uuid', 'email', 'first_name', 'last_name',
+        'profile_image_url', 'is_active', 'phone',
+        'street_address', 'city', 'state', 'postal_code',
       ],
     };
   }

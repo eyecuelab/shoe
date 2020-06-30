@@ -51,14 +51,6 @@ const Routes = [
   //         authorization: Joi.string().required(),
   //       }).unknown(),
   //       payload: {
-  //         first_name: Joi.string().required(),
-  //         last_name: Joi.string().required(),
-  //         email: Joi.string()
-  //           .email({ minDomainSegments: 2 })
-  //           .required()
-  //           .lowercase()
-  //           .error(Error('Must be a valid email address')),
-  //         password: Joi.string().min(6).required(),
   //       },
   //     },
   //   },

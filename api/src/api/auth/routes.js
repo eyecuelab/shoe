@@ -12,6 +12,25 @@ const Routes = [
     },
   ],
   [
+    'POST', '/signup', controller.signup,
+    {
+      description: 'Create a new account',
+      validate: {
+        payload: {
+          email: Joi.string()
+            .email({ minDomainSegments: 2 })
+            .required()
+            .lowercase()
+            .error(Error('Must be a valid email address')),
+          first_name: Joi.string().required(),
+          last_name: Joi.string().required(),
+          password: Joi.string().min(6).required(),
+        },
+      },
+      auth: false,
+    },
+  ],
+  [
     'GET', '/session', controller.current,
     {
       description: 'Root api data call for signed in user',
