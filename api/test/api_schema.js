@@ -11,7 +11,7 @@ function schemaError(message) {
 
 const actionField = Joi.object().keys({
   name: Joi.string().required(),
-  type: Joi.string().valid(['text', 'number', 'bool', 'password', 'array', 'file']).required(),
+  type: Joi.string().valid(['text', 'number', 'bool', 'password', 'array', 'file', 'object']).required(),
   value: Joi.any(),
   options: Joi.any(),
   schema: Joi.any(),

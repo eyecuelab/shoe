@@ -1,2 +1,1 @@
 # Shoe API
-.

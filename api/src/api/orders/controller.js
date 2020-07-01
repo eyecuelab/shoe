@@ -27,10 +27,9 @@ class OrderController extends BaseController {
   }
 
   async get(req) {
-    const { orderID } = req.params;
     const { id: userID } = req.currentUser;
 
-    const [err, data] = await To(Order.findByID(orderID));
+    const [err, data] = await To(this.fetch(req));
     if (err) {
       return Boom.badRequest(err);
     }
@@ -43,21 +42,80 @@ class OrderController extends BaseController {
 
   async create(req) {
     const input = this.input(req);
-    let imageUrl = '';
+    input.user_id = req.currentUser.id;
+
     if (req.payload.image_file) {
-      imageUrl = await this.uploadFile(req, req.payload.image_file, req.currentUser);
+      const [err, imageUrl] = await To(this.uploadFile(
+        req,
+        req.payload.image_file,
+        req.currentUser,
+      ));
+      if (err) {
+        return Boom.badRequest(err);
+      }
+      input.image_url = imageUrl;
     }
 
     const [err, item] = await To(Order.forge({
       ...input,
-      image_url: imageUrl,
-      user_id: req.currentUser.id,
       uuid: uuid(),
     }).save());
     if (err) {
       return Boom.badRequest(err);
     }
     return OrderSerializer.jsonAPI(item, req);
+  }
+
+  async update(req) {
+    const [er, item] = await To(this.fetch(req));
+    if (er) {
+      return Boom.badRequest(er);
+    }
+    if (item.attributes.user_id !== req.currentUser.id) {
+      return Boom.forbidden();
+    }
+    const input = this.input(req);
+
+    if (req.payload.image_file) {
+      const [err, imageUrl] = await To(this.uploadFile(
+        req,
+        req.payload.image_file,
+        req.currentUser,
+      ));
+      if (err) {
+        return Boom.badRequest(err);
+      }
+      input.image_url = imageUrl;
+    }
+
+    const [error, updated] = await To(item.save(input, { patch: true }));
+
+    if (error) {
+      return Boom.badRequest(error);
+    }
+
+    return OrderSerializer.jsonAPI(updated, req);
+  }
+
+  async del(req, h) {
+    const { orderID } = req.params;
+    const { id: userID } = req.currentUser;
+
+    const [er, item] = await To(Order.findByID(orderID));
+    if (er) {
+      return Boom.badRequest(er);
+    }
+
+    if (item.attributes.user_id !== userID) {
+      return Boom.forbidden();
+    }
+
+    await item.save(
+      { deleted_at: Core.models.DB.knex.fn.now() },
+      { patch: true },
+    );
+
+    return h.response().code(204);
   }
   // Helpers
 
@@ -77,26 +135,20 @@ class OrderController extends BaseController {
     return uploadResponse.Location;
   }
 
-  stringify(props) {
-    const data = { ...props };
-    const jsonProps = ['add_ons', 'shoe_types'];
-    jsonProps.forEach((k) => {
-      if (data[k]) {
-        data[k] = JSON.stringify(data[k]);
-      }
-    });
-    return data;
-  }
-
   input(req) {
     const keys = [
-      'shoe_types', 'time_frame', 'note',
+      'shoe_types', 'time_frame', 'note', 'published_at',
+      'cleaner_id', 'quote_accepted_at',
       'estimated_price', 'final_price', 'add_ons',
       'street_address', 'city', 'state', 'postal_code',
     ];
-    const input = this.stringify(this.cleanInput(req, keys));
+    const input = this.cleanInput(req, keys);
 
     return input;
+  }
+
+  fetch(req) {
+    return this.getByID(req.params.orderID, Order);
   }
 }
 

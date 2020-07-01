@@ -55,3 +55,7 @@ export async function seedUsers() {
 export async function seedData() {
   await seed('pages');
 }
+
+export async function seedOrders() {
+  await seed('orders');
+}

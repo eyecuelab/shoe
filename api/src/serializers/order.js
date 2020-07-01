@@ -76,7 +76,7 @@ export class OrderSerializer extends BaseSerializer {
 
     actions.push(this.action('PATCH', 'update', `${path}/${record.id}`, [
       ['image_file', 'file'],
-      ['shoe_types', 'object', record.shoe_types],
+      ['shoe_types', 'array', record.shoe_types],
       ['time_frame', 'text', record.time_frame],
       ['note', 'text', record.note],
       ['estimated_price', 'number', record.estimated_price],
@@ -87,6 +87,8 @@ export class OrderSerializer extends BaseSerializer {
       ['state', 'text', record.state],
       ['postal_code', 'text', record.postal_code],
     ]));
+    actions.push(this.action('DELETE', 'delete', `${path}/${record.id}`));
+    return actions;
   }
 }
 
