@@ -65,7 +65,7 @@
     "jsonapi-serializer": "^3.6.5",
     "jsonfile": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
-    "knex": "^0.17.0",
+    "knex": "^0.19.5",
     "lodash": "^4.17.14",
     "moment": "^2.22.2",
     "mrhorse": "^5.0.0",
