@@ -8,6 +8,7 @@ import Core from '../../core';
 import { BaseModel } from './base';
 import { Session } from './session';
 import { Cleaner } from './cleaner';
+import { Order } from './order';
 // import JSONAPIUtil from '../utils/jsonapi';
 
 const { DBUtil } = Core.utils;
@@ -34,6 +35,10 @@ export class User extends BaseModel {
 
   cleaner() {
     return this.hasOne(Cleaner);
+  }
+
+  orders() {
+    return this.hasMany(Order);
   }
 
   static withRolesScope(roles) {

@@ -9,7 +9,6 @@
     "lint": "./node_modules/.bin/eslint src/ --fix --quiet",
     "db:migrate": "babel-node ./node_modules/.bin/knex migrate:latest",
     "db:rollback": "babel-node ./node_modules/.bin/knex migrate:rollback",
-    "db:reset": "./node_modules/.bin/nodemon db:reset",
     "db:seed": "babel-node ./node_modules/.bin/knex seed:run",
     "tail:debug": "less +F ./logs/debug.log",
     "tail:error": "less +F ./logs/error.log"
