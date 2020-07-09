@@ -19,8 +19,9 @@
     "last_name": "Norris",
     "email": "example3@example.com",
     "password": "theshoe",
-    "scope": [
-      "admin"
-    ]
+    "street_address": "532 NW 12th Ave",
+    "city": "Portland",
+    "state": "OR",
+    "postal_code": "97209"
   }
 ]

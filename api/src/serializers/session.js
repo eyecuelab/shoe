@@ -1,4 +1,5 @@
 import { BaseSerializer } from './base';
+import CleanerSerializer from './cleaner';
 
 export class SessionSerializer extends BaseSerializer {
   static get resourceType() {
@@ -6,7 +7,7 @@ export class SessionSerializer extends BaseSerializer {
   }
 
   static attrs() {
-    return ['key', 'user_id', 'token', 'scope', 'user'];
+    return ['key', 'user_id', 'token', 'scope', 'user', 'cleaner'];
   }
 
   static itemMapper(req) {
@@ -14,10 +15,16 @@ export class SessionSerializer extends BaseSerializer {
       topLevelLinks: {
         self: this.url('session'),
         orders: this.url('orders'),
+        profile: this.url('profile'),
+        cleaners: this.url('cleaners'),
       },
       dataLinks: null,
       attributes: this.attrs(),
       user: this.userRel(),
+      cleaner: {
+        ref: 'id',
+        attributes: CleanerSerializer.attrs(),
+      },
       meta: {
         actions: () => {
           const actions = [
@@ -36,7 +43,19 @@ export class SessionSerializer extends BaseSerializer {
               ['password', 'password'],
             ]),
           ];
-
+          actions.push(this.action('POST', 'create_cleaner', '/cleaners', [
+            ['first_name', 'text', null],
+            ['last_name', 'text', null],
+            ['email', 'text', null],
+            ['street_address', 'text', null],
+            ['city', 'text', null],
+            ['state', 'text', null],
+            ['postal_code', 'text', null],
+            ['phone', 'text', null],
+            ['image_file', 'file'],
+            ['bio', 'text', null],
+            ['business_name', 'text', null],
+          ]));
           return actions;
         },
       },

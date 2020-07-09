@@ -11,50 +11,16 @@ const multipartOpts = {
 
 const Routes = [
   [
-    'GET', '/users', controller.getList,
-    {
-      description: 'Get a list of users',
-      validate: {
-        headers: Joi.object({
-          authorization: Joi.string().required(),
-        }).unknown(),
-        query: {
-          pageSize: Joi.number().min(10),
-          page: Joi.number().min(1),
-          filtering: Joi.string(),
-          sorting: Joi.string(),
-          search: Joi.string().allow(''),
-        },
-      },
-    },
-  ],
-  [
-    'GET', '/users/{userID}', controller.get,
+    'GET', '/profile', controller.get,
     {
       description: 'Get a user',
       validate: {
         headers: Joi.object({
           authorization: Joi.string().required(),
         }).unknown(),
-        params: {
-          userID: Joi.number().min(1),
-        },
       },
     },
   ],
-  // [
-  //   'POST', '/users', controller.create,
-  //   {
-  //     description: 'Create a user',
-  //     validate: {
-  //       headers: Joi.object({
-  //         authorization: Joi.string().required(),
-  //       }).unknown(),
-  //       payload: {
-  //       },
-  //     },
-  //   },
-  // ],
   [
     'PATCH', '/profile', controller.update,
     {
@@ -77,20 +43,6 @@ const Routes = [
       payload: multipartOpts,
     },
   ],
-  // [
-  //   'DELETE', '/users/{userID}', controller.del,
-  //   {
-  //     description: 'Remove user',
-  //     validate: {
-  //       headers: Joi.object({
-  //         authorization: Joi.string().required(),
-  //       }).unknown(),
-  //       params: {
-  //         userID: Joi.number().min(1),
-  //       },
-  //     },
-  //   },
-  // ],
 ];
 
 module.exports = (server) => {

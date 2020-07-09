@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "first_name": "Chuck",
+    "last_name": "Norris",
+    "email": "example3@example.com",
+    "street_address": "532 NW 12th Ave",
+    "city": "Portland",
+    "state": "OR",
+    "postal_code": "97209",
+    "business_name": "Cool Kicks",
+    "phone": "5555555555",
+    "user_id": 3
+  }
+]

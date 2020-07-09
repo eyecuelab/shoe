@@ -1,4 +1,5 @@
 import { BaseSerializer } from './base';
+import { CleanerSerializer } from './cleaner';
 
 export class UserSerializer extends BaseSerializer {
   static get resourceType() {
@@ -13,7 +14,7 @@ export class UserSerializer extends BaseSerializer {
     return [
       'first_name', 'last_name', 'email', 'scope', 'image_url',
       'created_at', 'updated_at', 'phone', 'street_address', 'city', 'state',
-      'postal_code',
+      'postal_code', 'cleaner',
     ];
   }
 
@@ -27,6 +28,10 @@ export class UserSerializer extends BaseSerializer {
       attributes: this.attrs(),
       meta: {
         actions: (record) => this.userActions(req, record),
+      },
+      cleaner: {
+        ref: 'id',
+        attributes: CleanerSerializer.attrs(),
       },
     };
   }
@@ -46,6 +51,21 @@ export class UserSerializer extends BaseSerializer {
       ['phone', 'text', record.phone],
       ['image_file', 'file'],
     ]));
+
+    actions.push(this.action('POST', 'create_cleaner', '/cleaners', [
+      ['first_name', 'text', null],
+      ['last_name', 'text', null],
+      ['email', 'text', null],
+      ['street_address', 'text', null],
+      ['city', 'text', null],
+      ['state', 'text', null],
+      ['postal_code', 'text', null],
+      ['phone', 'text', null],
+      ['image_file', 'file'],
+      ['bio', 'text', null],
+      ['business_name', 'text', null],
+    ]));
+
 
     return actions;
   }

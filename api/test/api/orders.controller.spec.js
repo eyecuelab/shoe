@@ -13,7 +13,7 @@ const { DB } = Core.models;
 
 const { expect } = chai;
 
-describe('Session API', () => {
+describe('Orders API', () => {
   let users = [];
   let patchOrderID;
   let deleteOrderID;

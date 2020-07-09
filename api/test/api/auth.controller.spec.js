@@ -17,9 +17,9 @@ describe('Session API', () => {
   let users = [];
   let user;
   let s;
-  const signedInActions = ['logout', 'update'];
+  const signedInActions = ['logout', 'update', 'create_cleaner'];
   const signedInLinks = [
-    'self', 'orders',
+    'self', 'orders', 'cleaners', 'profile',
   ];
 
   before(async () => {

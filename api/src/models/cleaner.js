@@ -43,7 +43,7 @@ export class Cleaner extends BaseModel {
       city: Joi.string().required(),
       state: Joi.string().length(2).required(),
       postal_code: Joi.string.required(),
-      phone_number: Joi.string.required(),
+      phone: Joi.string.required(),
       email: Joi.string().email().required(),
       user_id: Joi.number().required(),
     });
@@ -84,7 +84,7 @@ export class Cleaner extends BaseModel {
       city: data.city,
       state: data.state,
       postal_code: data.postal_code,
-      phone_number: data.phone_number,
+      phone: data.phone,
       email: data.email,
       user_id: data.user_id,
     };

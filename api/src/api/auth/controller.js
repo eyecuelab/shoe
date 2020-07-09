@@ -10,6 +10,7 @@ import { User } from '../../models/user';
 import { Session } from '../../models/session';
 import { SessionSerializer } from '../../serializers/session';
 import { SessionAnonSerializer } from '../../serializers/session_anon';
+import Cleaner from '../../models/cleaner';
 
 const { TokenUtil, SessionUtil, GeneralUtil } = Core.utils;
 const { To } = GeneralUtil;
@@ -51,6 +52,12 @@ class AuthController extends BaseController {
 
     req.currentUser = user;
 
+    const cleaner = await Cleaner.findByUserID(req.currentUser.id);
+
+    if (cleaner?.id) {
+      session.relations.cleaner = cleaner;
+    }
+
     return SessionSerializer.jsonAPI(session, req);
   }
 
@@ -68,6 +75,12 @@ class AuthController extends BaseController {
     delete req.currentUser.attributes.scope;
 
     req.sess.relations.user = req.currentUser;
+
+    const cleaner = await Cleaner.findByUserID(req.currentUser.id);
+
+    if (cleaner?.id) {
+      req.sess.relations.cleaner = cleaner;
+    }
 
     return SessionSerializer.jsonAPI(req.sess, req);
   }

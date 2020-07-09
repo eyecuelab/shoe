@@ -4,6 +4,7 @@ import Core from '../../../core';
 
 import BaseController from '../base';
 import { User } from '../../models/user';
+import { Cleaner } from '../../models/cleaner';
 import { UserSerializer } from '../../serializers/user';
 
 import { AccountEmailer } from '../../services/emailer';
@@ -33,6 +34,12 @@ class UsersController extends BaseController {
 
   async get(req) {
     const item = await this.fetch(req, true);
+
+    const cleaner = await Cleaner.findByUserID(item.id);
+
+    if (cleaner?.id) {
+      item.relations.cleaner = cleaner;
+    }
 
     return UserSerializer.jsonAPI(item, req);
   }
@@ -97,7 +104,7 @@ class UsersController extends BaseController {
   }
 
   fetch(req) {
-    return this.getByID(req.params.userID, User);
+    return this.getByID(req.currentUser.id, User);
   }
 
   async uploadFile(req, fileData, user) {

@@ -59,3 +59,7 @@ export async function seedData() {
 export async function seedOrders() {
   await seed('orders');
 }
+
+export async function seedCleaners() {
+  await seed('cleaners');
+}

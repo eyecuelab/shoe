@@ -24,7 +24,9 @@ export class OrderSerializer extends BaseSerializer {
       topLevelLinks: {
         self: path,
       },
-      dataLinks: null,
+      dataLinks: {
+        self: (record, current) => this.url(`${path}/${current.id}`),
+      },
       attributes: this.attrs(),
       meta: {
         pagination,
