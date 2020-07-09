@@ -52,7 +52,7 @@ export class UserSerializer extends BaseSerializer {
       ['image_file', 'file'],
     ]));
 
-    actions.push(this.action('POST', 'create_cleaner', '/cleaners', [
+    actions.push(this.action('POST', 'create_cleaner', 'cleaners', [
       ['first_name', 'text', null],
       ['last_name', 'text', null],
       ['email', 'text', null],

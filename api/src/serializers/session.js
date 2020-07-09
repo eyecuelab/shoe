@@ -30,7 +30,7 @@ export class SessionSerializer extends BaseSerializer {
           const actions = [
             this.action('POST', 'logout', 'logout'),
 
-            this.action('PATCH', 'update', '/profile', [
+            this.action('PATCH', 'update', 'profile', [
               ['first_name', 'text', req.currentUser.attributes.first_name],
               ['last_name', 'text', req.currentUser.attributes.last_name],
               ['email', 'text', req.currentUser.attributes.email],
@@ -43,7 +43,7 @@ export class SessionSerializer extends BaseSerializer {
               ['password', 'password'],
             ]),
           ];
-          actions.push(this.action('POST', 'create_cleaner', '/cleaners', [
+          actions.push(this.action('POST', 'create_cleaner', 'cleaners', [
             ['first_name', 'text', null],
             ['last_name', 'text', null],
             ['email', 'text', null],
