@@ -3,11 +3,11 @@ import { Readable } from 'stream';
 
 import controller from './controller';
 
-const multipartOpts = {
-  maxBytes: 10000000,
-  output: 'stream',
-  parse: true,
-};
+// const multipartOpts = {
+//   maxBytes: 10000000,
+//   output: 'stream',
+//   parse: true,
+// };
 
 const Routes = [
   [
@@ -38,9 +38,14 @@ const Routes = [
             .error(new Error('Must be a valid email address')),
           password: Joi.string().min(6).allow(null).allow(''),
           image_file: Joi.object().type(Readable),
+          street_address: Joi.string().required(),
+          city: Joi.string().required(),
+          state: Joi.string().length(2).required(),
+          postal_code: Joi.string().required(),
+          phone: Joi.string().required(),
         },
       },
-      payload: multipartOpts,
+      // payload: multipartOpts,
     },
   ],
 ];

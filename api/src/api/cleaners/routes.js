@@ -46,10 +46,10 @@ const Routes = [
         }).unknown(),
         payload: {
           business_name: Joi.string().required(),
+          bio: Joi.string().allow(''),
           first_name: Joi.string(),
           last_name: Joi.string(),
           image_file: Joi.object().type(Readable),
-          bio: Joi.string().allow(''),
           street_address: Joi.string().required(),
           city: Joi.string().required(),
           state: Joi.string().length(2).required(),
