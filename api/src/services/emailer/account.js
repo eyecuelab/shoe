@@ -6,6 +6,8 @@ import { BaseEmailer } from './base';
 const { LogUtil, TokenUtil, GeneralUtil } = Core.utils;
 const Config = Core.config;
 
+export const SIGNUP_EMAIL_REASON = 'signup_email';
+
 const LOG_NAME = 'AccountEmailer';
 
 export class AccountEmailer extends BaseEmailer {
@@ -33,8 +35,10 @@ export class AccountEmailer extends BaseEmailer {
       to: email,
       subject: 'Signup confirmation',
     };
+    const code = this.token.createCode(email, SIGNUP_EMAIL_REASON);
     const context = {
       sign_in_url: this.platformURL,
+      code,
     };
 
     return this.sendEmail(options, 'auth/signup-confirm', context);

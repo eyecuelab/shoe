@@ -7,7 +7,6 @@ const { LogUtil, GeneralUtil } = Core.utils;
 
 export const CONFIRM_EMAIL_REASON = 'confirm_email';
 export const RESET_PASSWORD_REASON = 'reset_password';
-export const INVITE_EMAIL_REASON = 'invite_email';
 
 const LOG_NAME = 'BaseEmailer';
 

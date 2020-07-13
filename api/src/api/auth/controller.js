@@ -1,4 +1,5 @@
 import Boom from '@hapi/boom';
+import Joi from '@hapi/joi';
 
 import Core from '../../../core';
 import Constants from '../../../config/constants';
@@ -12,6 +13,8 @@ import { SessionSerializer } from '../../serializers/session';
 import { SessionAnonSerializer } from '../../serializers/session_anon';
 import Cleaner from '../../models/cleaner';
 
+import { AccountEmailer } from '../../services/emailer';
+
 const { TokenUtil, SessionUtil, GeneralUtil } = Core.utils;
 const { To } = GeneralUtil;
 
@@ -22,6 +25,7 @@ class AuthController extends BaseController {
     super(CONTROLLER);
     this.token = new TokenUtil();
     this.roleSvc = RoleService.create();
+    this.accountEmailer = AccountEmailer.create();
     this.bindAll(this);
   }
 
@@ -92,14 +96,23 @@ class AuthController extends BaseController {
     return SessionAnonSerializer.jsonAPI(sess, req);
   }
 
-
   async signup(req, h) {
-    // TODO: send confirmation email, then take password with email token
-    const [err] = await To(User.createOne(this.input(req)));
+    const [err, user] = await To(User.createOne(this.input(req)));
+    await this.accountEmailer.sendSignupEmail(user);
 
     if (err) {
       throw Boom.badRequest(err);
     }
+    return h.response().code(204);
+  }
+
+  async inviteConfirm(req, h) {
+    const { code } = req.payload;
+    const user = await this.fetchAndValidateEmailCode(code, 'signup_email');
+    this.validateUserInactive(user);
+
+    await User.activateByEmail(user.attributes.email);
+
     return h.response().code(204);
   }
 
@@ -111,6 +124,34 @@ class AuthController extends BaseController {
       'password',
     ];
     return this.cleanInput(req, keys);
+  }
+
+  async fetchAndValidateEmailCode(code, reason) {
+    const val = this.token.decodeCode(code);
+    if (val == null) {
+      throw Boom.badRequest('invalid input');
+    }
+
+    const schema = Joi.object().keys({
+      email: Joi.string().email().required(),
+      type: Joi.string().required(),
+      reason: Joi.string().required(),
+      iat: Joi.number(),
+    });
+
+    const validate = await schema.validate(val);
+    const check = val.type === 'code' && val.reason === reason;
+    if (!validate || !check) {
+      throw Boom.badRequest('Invalid email confirmation code');
+    }
+
+    return this.getBy({ email: val.email.toLowerCase() }, User);
+  }
+
+  validateUserInactive(user) {
+    if (user.attributes.is_active) {
+      throw Boom.badRequest('User is already active');
+    }
   }
 }
 

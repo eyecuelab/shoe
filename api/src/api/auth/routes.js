@@ -31,6 +31,18 @@ const Routes = [
     },
   ],
   [
+    'POST', '/signup/confirm', controller.signupConfirm,
+    {
+      description: 'Confirm signup email and set password',
+      validate: {
+        payload: {
+          code: Joi.string().required(),
+        },
+      },
+      auth: false,
+    },
+  ],
+  [
     'GET', '/session', controller.current,
     {
       description: 'Root api data call for signed in user',
