@@ -30,7 +30,9 @@ class OrderController extends BaseController {
   async get(req) {
     const { id: userID } = req.currentUser;
 
-    const [err, data] = await To(this.fetch(req));
+    const [err, data] = await To(this.getByID({ id: req.params.orderID }, Order, ['quotes', 'cleaner']));
+    console.log(data);
+
     if (err) {
       return Boom.badRequest(err);
     }
@@ -38,11 +40,6 @@ class OrderController extends BaseController {
       return Boom.forbidden();
     }
 
-    // if (data.attributes.published_at) {
-    //   const quotes = await Quote.findAllForOrder(req.params);
-
-    //   data.relations.quotes = quotes.models;
-    // }
 
     return OrderSerializer.jsonAPI(data, req);
   }
@@ -130,8 +127,8 @@ class OrderController extends BaseController {
     return input;
   }
 
-  fetch(req) {
-    return this.getByID(req.params.orderID, Order);
+  fetch(req, withRelated = []) {
+    return this.getByID(req.params.orderID, Order, withRelated);
   }
 }
 

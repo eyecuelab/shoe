@@ -6,6 +6,7 @@ import uuidv4 from 'uuid/v4';
 import { BaseModel } from './base';
 import { User } from './user';
 import { Cleaner } from './cleaner';
+import { Quote } from './quote';
 // import JSONAPIUtil from '../utils/jsonapi';
 
 
@@ -30,7 +31,11 @@ export class Order extends BaseModel {
   }
 
   cleaner() {
-    return this.hasOne(Cleaner);
+    return this.belongsTo(Cleaner);
+  }
+
+  quotes() {
+    return this.hasMany(Quote);
   }
 
   static validate(order) {

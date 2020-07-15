@@ -29,10 +29,6 @@ export class OrderSerializer extends BaseSerializer {
         self: (record, current) => this.url(`${path}/${current.id}`),
       },
       attributes: this.attrs(),
-      quotes: {
-        ref: 'id',
-        attributes: ['quoted_price', 'expires_at', 'delivery_by'],
-      },
       meta: {
         pagination,
         actions: this.listActions(req),
