@@ -49,7 +49,7 @@ export class UserSerializer extends BaseSerializer {
       ['state', 'text', record.state],
       ['postal_code', 'text', record.postal_code],
       ['phone', 'text', record.phone],
-      ['image_file', 'file'],
+      ['image_url', 'string', record.image_url],
     ]));
 
     actions.push(this.action('POST', 'create_cleaner', 'cleaners', [
@@ -61,7 +61,7 @@ export class UserSerializer extends BaseSerializer {
       ['state', 'text', null],
       ['postal_code', 'text', null],
       ['phone', 'text', null],
-      ['image_file', 'file'],
+      ['image_url', 'string', null],
       ['bio', 'text', null],
       ['business_name', 'text', null],
     ]));

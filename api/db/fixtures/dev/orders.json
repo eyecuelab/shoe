@@ -47,5 +47,29 @@
     "created_at": "2020-07-01 09:58:40.448057-07",
     "updated_at": "2020-07-01 09:58:40.448057-07",
     "user_id": 2
+  },
+  {
+    "id": 3,
+    "uuid": "d514d444-fd82-475d-b5e6-b875bd02683d",
+    "shoe_types": [
+      "Exercise",
+      "Outdoor"
+    ],
+    "time_frame": "Within a few days",
+    "note": "I still need to upload a photo",
+    "add_ons": {
+      "polish": false,
+      "rainProtection": false,
+      "replaceLaces": false
+    },
+    "estimated_price": 24.99,
+    "street_address": "123 Street st",
+    "city": "Portland",
+    "state": "OR",
+    "postal_code": "97213",
+    "created_at": "2020-07-01 09:58:40.448057-07",
+    "updated_at": "2020-07-01 09:58:40.448057-07",
+    "published_at": "2020-07-01 09:58:40.448057-07",
+    "user_id": 2
   }
 ]

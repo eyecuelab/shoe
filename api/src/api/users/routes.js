@@ -1,5 +1,4 @@
 import Joi from '@hapi/joi';
-import { Readable } from 'stream';
 
 import controller from './controller';
 
@@ -37,7 +36,7 @@ const Routes = [
             .lowercase()
             .error(new Error('Must be a valid email address')),
           password: Joi.string().min(6).allow(null).allow(''),
-          image_file: Joi.object().type(Readable),
+          image_url: Joi.string().uri(),
           street_address: Joi.string().required(),
           city: Joi.string().required(),
           state: Joi.string().length(2).required(),

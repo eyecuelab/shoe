@@ -75,6 +75,35 @@ export class Order extends BaseModel {
       user_id: userID,
     });
   }
+
+  static publishedScope(qb) {
+    qb.whereRaw('orders.published_at is not null');
+  }
+
+  static quotableScope(qb) {
+    qb.whereRaw('orders.quote_accepted_at is null');
+  }
+
+  static cleanerScope(cleanerID) {
+    return (qb) => {
+      qb.whereRaw('orders.cleaner_id = ?', [cleanerID]);
+    };
+  }
+
+  static inProgressScope(qb) {
+    qb.whereRaw('orders.quote_accepted_at is not null');
+  }
+
+  static completedScope(qb) {
+    qb.whereRaw('orders.shoes_delivered = true');
+  }
+
+  static quotedScope(cleanerID) {
+    return (qb) => {
+      qb.leftJoin('quotes', 'orders.id', 'quotes.order_id');
+      qb.whereRaw(('quotes.cleaner_id = ?', [cleanerID]));
+    };
+  }
 }
 
 export default Order;

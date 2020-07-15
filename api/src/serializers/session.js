@@ -39,7 +39,7 @@ export class SessionSerializer extends BaseSerializer {
               ['state', 'text', req.currentUser.attributes.state],
               ['postal_code', 'text', req.currentUser.attributes.postal_code],
               ['phone', 'text', req.currentUser.attributes.phone],
-              ['image_file', 'file'],
+              ['image_url', 'string', req.currentUser.attributes.image_url],
               ['password', 'password'],
             ]),
           ];
@@ -52,7 +52,7 @@ export class SessionSerializer extends BaseSerializer {
             ['state', 'text', null],
             ['postal_code', 'text', null],
             ['phone', 'text', null],
-            ['image_file', 'file'],
+            ['image_url', 'string', null],
             ['bio', 'text', null],
             ['business_name', 'text', null],
           ]));

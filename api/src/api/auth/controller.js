@@ -106,7 +106,7 @@ class AuthController extends BaseController {
     return h.response().code(204);
   }
 
-  async inviteConfirm(req, h) {
+  async signupConfirm(req, h) {
     const { code } = req.payload;
     const user = await this.fetchAndValidateEmailCode(code, 'signup_email');
     this.validateUserInactive(user);

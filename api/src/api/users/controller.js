@@ -59,12 +59,8 @@ class UsersController extends BaseController {
   }
 
   async update(req) {
-    let item = req.currentUser;
+    const item = req.currentUser;
     const input = this.input(req);
-    if (req.payload.image_file) {
-      const imageUrl = await this.uploadFile(req, req.payload.image_file, item);
-      item = await this.updateInstance(req, item, { image_url: imageUrl });
-    }
 
     const { password } = req.payload;
     if (password && password.length) {
@@ -92,7 +88,7 @@ class UsersController extends BaseController {
 
   input(req) {
     const keys = [
-      'first_name', 'last_name', 'email', 'street_address', 'city', 'state', 'postal_code',
+      'first_name', 'last_name', 'email', 'street_address', 'city', 'state', 'postal_code', 'phone',
     ];
 
     const input = this.cleanInput(req, keys);

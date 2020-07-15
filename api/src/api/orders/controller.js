@@ -5,6 +5,7 @@ import Core from '../../../core';
 import BaseController from '../base';
 import { Order } from '../../models/order';
 import { OrderSerializer } from '../../serializers/order';
+// import Quote from '../../models/quote';
 
 const { S3API } = Core.integrations.S3API;
 const { GeneralUtil } = Core.utils;
@@ -37,24 +38,18 @@ class OrderController extends BaseController {
       return Boom.forbidden();
     }
 
+    // if (data.attributes.published_at) {
+    //   const quotes = await Quote.findAllForOrder(req.params);
+
+    //   data.relations.quotes = quotes.models;
+    // }
+
     return OrderSerializer.jsonAPI(data, req);
   }
 
   async create(req) {
     const input = this.input(req);
     input.user_id = req.currentUser.id;
-
-    if (req.payload.image_file) {
-      const [err, imageUrl] = await To(this.uploadFile(
-        req,
-        req.payload.image_file,
-        req.currentUser,
-      ));
-      if (err) {
-        return Boom.badRequest(err);
-      }
-      input.image_url = imageUrl;
-    }
 
     const [err, item] = await To(Order.forge({
       ...input,
@@ -75,18 +70,6 @@ class OrderController extends BaseController {
       return Boom.forbidden();
     }
     const input = this.input(req);
-
-    if (req.payload.image_file) {
-      const [err, imageUrl] = await To(this.uploadFile(
-        req,
-        req.payload.image_file,
-        req.currentUser,
-      ));
-      if (err) {
-        return Boom.badRequest(err);
-      }
-      input.image_url = imageUrl;
-    }
 
     const [error, updated] = await To(item.save(input, { patch: true }));
 
@@ -138,7 +121,7 @@ class OrderController extends BaseController {
   input(req) {
     const keys = [
       'shoe_types', 'time_frame', 'note', 'published_at',
-      'cleaner_id', 'quote_accepted_at',
+      'cleaner_id', 'quote_accepted_at', 'image_url',
       'estimated_price', 'final_price', 'add_ons',
       'street_address', 'city', 'state', 'postal_code',
     ];

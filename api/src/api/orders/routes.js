@@ -1,5 +1,4 @@
 import Joi from '@hapi/joi';
-import { Readable } from 'stream';
 
 import controller from './controller';
 
@@ -31,7 +30,7 @@ const Routes = [
           authorization: Joi.string().required(),
         }).unknown(),
         payload: {
-          image_file: Joi.object().type(Readable),
+          image_url: Joi.string().uri(),
           shoe_types: Joi.any(),
           time_frame: Joi.string(),
           add_ons: Joi.any(),
@@ -53,6 +52,10 @@ const Routes = [
         headers: Joi.object({
           authorization: Joi.string().required(),
         }).unknown(),
+        // query: {
+        //   in_progress: Joi.boolean(),
+        //   completed: Joi.boolean(),
+        // },
       },
     },
   ],
@@ -65,7 +68,7 @@ const Routes = [
           authorization: Joi.string().required(),
         }).unknown(),
         payload: {
-          image_file: Joi.object().type(Readable).allow(null),
+          image_url: Joi.string().uri(),
           shoe_types: Joi.any().allow(null),
           time_frame: Joi.string().allow(null),
           add_ons: Joi.any().allow(null),
@@ -78,7 +81,6 @@ const Routes = [
           published_at: Joi.string().allow(null),
           cleaner_id: Joi.string().allow(null),
           final_price: Joi.number().allow(null),
-          quote_accepted_at: Joi.string().allow(null),
         },
       },
     },
