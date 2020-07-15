@@ -12,7 +12,7 @@ export class OrderSerializer extends BaseSerializer {
 
   static attrs() {
     return [
-      'uuid', 'image_url', 'shoe_types', 'time_frame', 'note',
+      'uuid', 'image_url', 'shoe_types', 'time_frame', 'note', 'quotes',
       'estimated_price', 'final_price', 'add_ons', 'street_address',
       'city', 'state', 'postal_code', 'created_at', 'updated_at', 'published_at',
       'quote_accepted_at', 'cleaner_id', 'user_id', 'completed_at', 'cleaner',
@@ -29,6 +29,14 @@ export class OrderSerializer extends BaseSerializer {
         self: (record, current) => this.url(`${path}/${current.id}`),
       },
       attributes: this.attrs(),
+      quotes: {
+        ref: 'id',
+        attributes: ['quoted_price', 'expires_at', 'delivery_by'],
+      },
+      cleaner: {
+        ref: 'id',
+        attributes: CleanerSerializer.attrs(),
+      },
       meta: {
         pagination,
         actions: this.listActions(req),

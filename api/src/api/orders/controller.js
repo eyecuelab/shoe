@@ -30,8 +30,7 @@ class OrderController extends BaseController {
   async get(req) {
     const { id: userID } = req.currentUser;
 
-    const [err, data] = await To(this.getByID({ id: req.params.orderID }, Order, ['quotes', 'cleaner']));
-    console.log(data);
+    const [err, data] = await To(this.getByID(req.params.orderID, Order, ['quotes', 'cleaner']));
 
     if (err) {
       return Boom.badRequest(err);
