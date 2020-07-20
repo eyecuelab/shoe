@@ -65,7 +65,12 @@ class OrderController extends BaseController {
     if (item.attributes.user_id !== req.currentUser.id) {
       return Boom.forbidden();
     }
+
     const input = this.input(req);
+
+    if (input.cleaner_id) {
+      input.quote_accepted_at = Core.models.DB.knex.fn.now();
+    }
 
     const [error, updated] = await To(item.save(input, { patch: true }));
 

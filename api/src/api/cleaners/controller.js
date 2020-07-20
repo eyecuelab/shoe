@@ -53,7 +53,7 @@ class CleanersController extends BaseController {
     if (req.query.quotable) {
       scopes.push(Order.quotableScope);
     } else if (req.query.quoted) {
-      scopes.push(Order.quotableScope(cleaner.id));
+      scopes.push(Order.quotedScope(cleaner.id));
     } else if (req.query.in_progress) {
       scopes.push(Order.cleanerScope(cleaner.id));
       scopes.push(Order.inProgressScope);
