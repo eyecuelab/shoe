@@ -88,7 +88,7 @@ class UsersController extends BaseController {
 
   input(req) {
     const keys = [
-      'first_name', 'last_name', 'email', 'street_address', 'city', 'state', 'postal_code', 'phone',
+      'image_url', 'first_name', 'last_name', 'email', 'street_address', 'city', 'state', 'postal_code', 'phone',
     ];
 
     const input = this.cleanInput(req, keys);

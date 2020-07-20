@@ -36,7 +36,7 @@ const Routes = [
             .lowercase()
             .error(new Error('Must be a valid email address')),
           password: Joi.string().min(6).allow(null).allow(''),
-          image_url: Joi.string().uri(),
+          image_url: Joi.string().uri().allow(null).allow(''),
           street_address: Joi.string().required(),
           city: Joi.string().required(),
           state: Joi.string().length(2).required(),
