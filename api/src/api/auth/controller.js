@@ -98,11 +98,12 @@ class AuthController extends BaseController {
 
   async signup(req, h) {
     const [err, user] = await To(User.createOne(this.input(req)));
-    await this.accountEmailer.sendSignupEmail(user);
 
     if (err) {
       throw Boom.badRequest(err);
     }
+
+    await this.accountEmailer.sendSignupEmail(user);
     return h.response().code(204);
   }
 
