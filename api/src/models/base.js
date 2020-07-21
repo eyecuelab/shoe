@@ -78,7 +78,7 @@ export class BaseModel extends Core.models.DB.Model {
     const data = {
       ...input,
       updated_by: userID,
-      updated_at: Core.models.DB.knex.fn.now(),
+      updated_at: new Date(),
     };
 
     const item = await this.save(data, { patch: true });
@@ -100,8 +100,10 @@ export class BaseModel extends Core.models.DB.Model {
       return null;
     }
     return this.save(
-      { deleted_by: userID,
-        deleted_at: Core.models.DB.knex.fn.now() },
+      {
+        deleted_by: userID,
+        deleted_at: new Date(),
+      },
       { patch: true },
     );
   }

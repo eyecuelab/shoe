@@ -74,15 +74,15 @@ class UsersController extends BaseController {
     return UserSerializer.jsonAPI(updated, req);
   }
 
-  // async del(req, h) {
-  //   const item = await this.fetch(req);
-  //   await item.save(
-  //     { deleted_at: Core.models.DB.knex.fn.now() },
-  //     { patch: true },
-  //   );
-  //
-  //   return h.response().code(204);
-  // }
+  async del(req, h) {
+    const item = await this.fetch(req);
+    await item.save(
+      { deleted_at: new Date() },
+      { patch: true },
+    );
+
+    return h.response().code(204);
+  }
 
   // Helpers
 

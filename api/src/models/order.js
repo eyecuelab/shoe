@@ -96,17 +96,17 @@ export class Order extends BaseModel {
   }
 
   static inProgressScope(qb) {
-    qb.whereRaw('orders.quote_accepted_at is not null');
+    qb.whereRaw('orders.shoes_dropped_off != true');
   }
 
   static completedScope(qb) {
-    qb.whereRaw('orders.shoes_delivered = true');
+    qb.whereRaw('orders.shoes_dropped_off = true');
   }
 
   static quotedScope(cleanerID) {
     return (qb) => {
       qb.leftJoin('quotes', 'orders.id', 'quotes.order_id');
-      qb.whereRaw(('quotes.cleaner_id = ?', [cleanerID]));
+      qb.whereRaw('quotes.cleaner_id = ?', [cleanerID]);
     };
   }
 }

@@ -36,6 +36,9 @@ class AuthController extends BaseController {
     if (!user) {
       return Boom.unauthorized('Wrong email/password');
     }
+    if (user.attributes.confirmation_sent_at) {
+      return Boom.unauthorized('Unconfirmed user, please submit email verification code');
+    }
     const session = await Session.createOne(user.attributes.id);
 
     const scopes = [...user.attributes.scope];
@@ -150,7 +153,7 @@ class AuthController extends BaseController {
   }
 
   validateUserInactive(user) {
-    if (user.attributes.is_active) {
+    if (!user.attributes.confirmation_sent_at) {
       throw Boom.badRequest('User is already active');
     }
   }

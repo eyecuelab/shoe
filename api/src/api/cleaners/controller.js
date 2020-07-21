@@ -195,8 +195,8 @@ class CleanersController extends BaseController {
       return Boom.forbidden('Only owner can delete');
     }
     await item.save(
-      { deleted_at: Core.models.DB.knex.fn.now() },
-      { email: `deleted_at_${Core.models.DB.knex.fn.now()}_${item.attributes.email}` },
+      { deleted_at: new Date() },
+      { email: `deleted_at_${new Date()}_${item.attributes.email}` },
       { patch: true },
     );
 

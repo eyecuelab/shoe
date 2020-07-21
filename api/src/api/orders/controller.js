@@ -69,7 +69,7 @@ class OrderController extends BaseController {
     const input = this.input(req);
 
     if (input.cleaner_id) {
-      input.quote_accepted_at = Core.models.DB.knex.fn.now();
+      input.quote_accepted_at = new Date();
     }
 
     const [error, updated] = await To(item.save(input, { patch: true }));
@@ -95,7 +95,7 @@ class OrderController extends BaseController {
     }
 
     await item.save(
-      { deleted_at: Core.models.DB.knex.fn.now() },
+      { deleted_at: new Date() },
       { patch: true },
     );
 

@@ -79,7 +79,7 @@ const Routes = [
           state: Joi.string().allow(null),
           postal_code: Joi.string().allow(null),
           published_at: Joi.string().allow(null),
-          cleaner_id: Joi.string().allow(null),
+          cleaner_id: Joi.number().min(1).allow(null),
           final_price: Joi.number().allow(null),
         },
       },
