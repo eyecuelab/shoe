@@ -96,11 +96,11 @@ export class Order extends BaseModel {
   }
 
   static inProgressScope(qb) {
-    qb.whereNot('orders.shoes_dropped_off', true);
+    qb.whereRaw('orders.shoes_dropped_off <> true');
   }
 
   static completedScope(qb) {
-    qb.where('orders.shoes_dropped_off', true);
+    qb.whereRaw('orders.shoes_dropped_off = true');
   }
 
   static quotedScope(cleanerID) {
