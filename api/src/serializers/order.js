@@ -16,6 +16,7 @@ export class OrderSerializer extends BaseSerializer {
       'estimated_price', 'final_price', 'add_ons', 'street_address',
       'city', 'state', 'postal_code', 'created_at', 'updated_at', 'published_at',
       'quote_accepted_at', 'cleaner_id', 'user_id', 'completed_at', 'cleaner',
+      'shoes_picked_up', 'shoes_cleaned', 'shoes_polished', 'request_payment', 'shoes_dropped_off',
     ];
   }
 
