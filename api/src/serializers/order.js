@@ -31,7 +31,7 @@ export class OrderSerializer extends BaseSerializer {
       attributes: this.attrs(),
       quotes: {
         ref: 'id',
-        attributes: ['quoted_price', 'expires_at', 'delivery_by'],
+        attributes: ['quoted_price', 'expires_at', 'delivery_by', 'cleaner_id'],
       },
       cleaner: {
         ref: 'id',
@@ -55,7 +55,7 @@ export class OrderSerializer extends BaseSerializer {
       attributes: this.attrs(),
       quotes: {
         ref: 'id',
-        attributes: ['quoted_price', 'expires_at', 'delivery_by'],
+        attributes: ['quoted_price', 'expires_at', 'delivery_by', 'cleaner_id'],
       },
       cleaner: {
         ref: 'id',
