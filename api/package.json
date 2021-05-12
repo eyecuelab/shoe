@@ -69,7 +69,7 @@
     "lodash": "^4.17.14",
     "moment": "^2.22.2",
     "mrhorse": "^5.0.0",
-    "nodemailer": "^4.7.0",
+    "nodemailer": "^6.4.16",
     "nodemailer-markdown": "git://github.com/andris9/nodemailer-markdown.git#df6de6484c2a80ffbcb0d802065f74d79059f448",
     "pg": "^7.11.0",
     "phantomjs-prebuilt": "^2.1.16",
