@@ -36,7 +36,7 @@
     "@hapi/joi": "^15.1.1",
     "@hapi/vision": "^5.5.4",
     "@sendgrid/mail": "^6.4.0",
-    "aws-sdk": "^2.571.0",
+    "aws-sdk": "^2.814.0",
     "axios": "^0.18.1",
     "babel-eslint": "^10.0.3",
     "bcryptjs": "^2.4.3",
