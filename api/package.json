@@ -67,7 +67,7 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.17.0",
     "lodash": "^4.17.14",
-    "moment": "^2.22.2",
+    "moment": "^2.29.4",
     "mrhorse": "^5.0.0",
     "nodemailer": "^4.7.0",
     "nodemailer-markdown": "git://github.com/andris9/nodemailer-markdown.git#df6de6484c2a80ffbcb0d802065f74d79059f448",
